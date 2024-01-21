@@ -8,11 +8,11 @@ if (!isset($_SESSION['id_usuario'])) {
 require_once 'conn.php';
 
 $id_usuario = $_SESSION['id_usuario'];
-$avaliacoes = $_POST['avaliacao'];
+$avaliacoes2 = $_POST['avaliacao'];
 
 // Certifique-se de que exatamente 8 avaliações foram recebidas
 if (count($avaliacoes) == 8) {
-    $sql = "INSERT INTO Avaliacoes (id_usuario, avaliacao1, avaliacao2, avaliacao3, avaliacao4, avaliacao5, avaliacao6, avaliacao7, avaliacao8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO Avaliacoes2 (id_usuario, avaliacao9, avaliacao10, avaliacao11, avaliacao12, avaliacao13, avaliacao14, avaliacao15, avaliacao16) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if ($stmt === false) {
@@ -22,8 +22,7 @@ if (count($avaliacoes) == 8) {
     $stmt->bind_param("iiiiiiiii", $id_usuario, ...$avaliacoes);
 
     if ($stmt->execute()) {
-        echo "Avaliações inseridas com sucesso.<br>";
-        echo "<a href='parte2.php'>Ir para a próxima parte</a>";
+        echo "Avaliações inseridas com sucesso.";
     } else {
         echo "Erro ao inserir avaliações: " . $stmt->error;
     }
@@ -32,4 +31,5 @@ if (count($avaliacoes) == 8) {
 } else {
     exit('Número incorreto de avaliações recebidas.');
 }
+
 ?>

@@ -13,7 +13,7 @@
   <header>
     <br>
     <br>
-    <form id="avaliacaoForm" onsubmit="return validarFormulario()" method="post" action="/Teste-Profissional/cad-parte0.php">
+    <form id="avaliacaoForm" onsubmit="return validarFormulario()" method="post" action="/forms-profissional/cad-parte0.php">
 
       <h2>Avaliação Profissional</h2>
       <br>
@@ -32,15 +32,8 @@
       </label>
       <br>
       <br>
-      <label>
-        Telemovel: <input type="tel" name="txtContato" placeholder="Digite seu Telemovel:" required>
-      </label>
-      <br>
-      <br>
       <div class="botao">
-        <a href="/Teste-Profissional/parte1.php">
-          <button type="button" class="butao">next</button>
-        </a>
+
         <input type="submit" value="Enviar">
       </div>
 
