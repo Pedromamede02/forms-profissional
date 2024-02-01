@@ -39,7 +39,7 @@
 </head>
 <body>
   <header>
-  <form id="avaliacaoForm" onsubmit="return validarFormulario()" method="post" action="http://127.0.0.1:5000/forms-profissional/cad-parte1">
+  <form id="avaliacaoForm" onsubmit="return validarFormulario()" method="post" action="/forms-profissional/cad-parte1.php">
       <h2>Avaliação Profissional</h2>
       
       <!-- Parte 1 -->
