@@ -45,3 +45,4 @@ CREATE TABLE Avaliacoes2 (
     data_submissao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES tbusu(id)
 );
+
