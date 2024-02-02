@@ -1,41 +1,3 @@
-import mysql.connector
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-
-# Configurações do banco de dados
-db_config = {
-    'user': 'root',
-    'password': '',  # Substitua pela sua senha, se aplicável
-    'host': 'localhost',
-    'database': 'projeto',
-    'raise_on_warnings': True
-}
-
-# Configurações de e-mail
-email_config = {
-    'smtp_server': 'smtp.gmail.com',
-    'smtp_port': 587,
-    'smtp_user': 'pedropepe181@gmail.com',
-    'smtp_password': 'pwrnxdkeuljdphwb'  # Use sua senha de aplicativo aqui se a verificação em duas etapas estiver ativada
-}
-
-def enviar_email(destinatario, mensagem):
-    msg = MIMEMultipart()
-    msg['Subject'] = 'Resultado da Avaliação de Criatividade'
-    msg['From'] = email_config['smtp_user']
-    msg['To'] = destinatario
-    msg.attach(MIMEText(mensagem, 'plain'))
-
-    try:
-        s = smtplib.SMTP(email_config['smtp_server'], email_config['smtp_port'])
-        s.starttls()
-        s.login(email_config['smtp_user'], email_config['smtp_password'])
-        s.sendmail(msg['From'], [msg['To']], msg.as_string())
-        s.quit()
-        print('Email enviado')
-    except smtplib.SMTPException as e:
-        print(f'Erro ao enviar e-mail: {e}')
 
 try:
     # Conecta ao banco de dados
@@ -84,7 +46,7 @@ try:
         mensagem_email += f'SH - Inventor: {inventor}\n'
 
         # Envia o resultado por e-mail para o usuário mais recente
-        enviar_email(email_usuario, mensagem_email)
+        enviar_email('pedropepe181@gmail.com', mensagem_email)
 
 except mysql.connector.Error as err:
     print(f"Erro MySQL: {err}")
