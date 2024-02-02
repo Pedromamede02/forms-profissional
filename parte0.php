@@ -23,7 +23,7 @@
       <br>
       <br>
       <label>
-        Sobrenome: <input type="text" name="txtSobrenom" placeholder="Digite seu Sobrenome" required>
+        Sobrenome: <input type="text" name="txtSobrenome" placeholder="Digite seu Sobrenome" required>
       </label>
       <br>
       <br>

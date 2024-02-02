@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Recebendo os dados do formulário
     $nome = $_POST['txtNome'];
-    $sobrenome = $_POST['txtSobrenom'];
+    $sobrenome = $_POST['txtSobrenome'];
     $email = $_POST['txtEmail'];
 
     // Preparando e executando a consulta para inserir os dados na tabela tbusu
