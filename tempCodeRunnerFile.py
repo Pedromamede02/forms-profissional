@@ -1,23 +1,3 @@
-import mysql.connector
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
- 
-config = {
-    'user': 'root',
-    'password': '',  # Substitua pela sua senha, se aplicável
-    'host': 'localhost',
-    'database': 'projeto',
-    'raise_on_warnings': True
-}
-
-email_config = {
-    'smtp_server': 'smtp.gmail.com',
-    'smtp_port': 587,
-    'smtp_user': 'pedropepe181@gmail.com',
-    'smtp_password': 'pwrnxdkeuljdphwb'  # Use sua senha de aplicativo aqui se a verificação em duas etapas estiver ativada
-}
-
 def enviar_email(destinatario, criatividade):
     msg = MIMEMultipart()
     msg['Subject'] = 'Resultado da Avaliação de Criatividade'
@@ -59,12 +39,3 @@ try:
         
         # Envia o resultado por e-mail para o usuário mais recente
         enviar_email(email_usuario, criatividade)
-
-except mysql.connector.Error as err:
-    print(f"Erro: {err}")
-
-finally:
-    if cnx.is_connected():
-        cursor.close()
-        cnx.close()
-        print("Conexão ao MySQL foi encerrada")
