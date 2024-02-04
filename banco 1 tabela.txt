@@ -23,19 +23,3 @@ CREATE TABLE avaliacoes (
     data_submissao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES tbusu(id)
 );
-
-
-CREATE TABLE avaliacoes2 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
-    avaliacao9 INT CHECK (avaliacao9 BETWEEN 0 AND 10),
-    avaliacao10 INT CHECK (avaliacao10 BETWEEN 0 AND 10),
-    avaliacao11 INT CHECK (avaliacao11 BETWEEN 0 AND 10),
-    avaliacao12 INT CHECK (avaliacao12 BETWEEN 0 AND 10),
-    avaliacao13 INT CHECK (avaliacao13 BETWEEN 0 AND 10),
-    avaliacao14 INT CHECK (avaliacao14 BETWEEN 0 AND 10),
-    avaliacao15 INT CHECK (avaliacao15 BETWEEN 0 AND 10),
-    avaliacao16 INT CHECK (avaliacao16 BETWEEN 0 AND 10),
-    data_submissao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES tbusu(id)
-);
