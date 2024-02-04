@@ -27,6 +27,15 @@ $perguntas = [
     new Pergunta(6, "I can usually sense what is realistic and likely to work"),
     new Pergunta(7, "I can offer a reasoned case for alternative courses of action without introducing bias or prejudice"),
 ];
+
+// Insere perguntas no banco de dados
+foreach ($perguntas as $pergunta) {
+  $stmt = $conn->prepare("INSERT INTO tbperguntas (texto) VALUES (?)");
+  // Correção: obter o texto da pergunta
+  $textoPergunta = $pergunta->getTexto();
+  $stmt->bind_param("s", $textoPergunta);
+  $stmt->execute();
+}
 ?>
 
 <!DOCTYPE html>
