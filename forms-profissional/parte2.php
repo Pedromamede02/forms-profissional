@@ -8,7 +8,7 @@
 </head>
 <body>
   <header>
-    <form id="avaliacaoForm" method="post" action="/forms-profissional/parte2.php">
+    <form id="avaliacaoForm" method="post" action="/forms-profissional/forms-profissional/parte2.php">
       <h2>Professional Assessment</h2>
 
       <!-- Perguntas 9 a 16 -->

@@ -9,7 +9,7 @@ CREATE TABLE tbusu (
     email VARCHAR(255) NOT NULL UNIQUE
 );
 
-CREATE TABLE avaliacoes (
+CREATE TABLE respostas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
     avaliacao1 INT CHECK (avaliacao1 BETWEEN 0 AND 10),
@@ -22,4 +22,21 @@ CREATE TABLE avaliacoes (
     avaliacao8 INT CHECK (avaliacao8 BETWEEN 0 AND 10),
     data_submissao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES tbusu(id)
+);
+
+CREATE TABLE respostas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    id_pergunta INT,
+    id01 INT CHECK (id01 BETWEEN 0 AND 10),
+    id02 INT CHECK (id02 BETWEEN 0 AND 10),
+    id03 INT CHECK (id03 BETWEEN 0 AND 10),
+    id04 INT CHECK (id04 BETWEEN 0 AND 10),
+    id05 INT CHECK (id05 BETWEEN 0 AND 10),
+    id06 INT CHECK (id06 BETWEEN 0 AND 10),
+    id07 INT CHECK (id07 BETWEEN 0 AND 10),
+    id08 INT CHECK (id08 BETWEEN 0 AND 10),
+    data_submissao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES tbusu(id),
+    FOREIGN KEY (id_pergunta) REFERENCES tbperguntas(id)
 );

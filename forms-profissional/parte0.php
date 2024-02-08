@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +14,7 @@
   <header>
     <br>
     <br>
-    <form id="avaliacaoForm" onsubmit="return validarFormulario()" method="post" action="/forms-profissional/cad-parte0.php">
+    <form id="avaliacaoForm" onsubmit="return validarFormulario()" method="post" action="/cad-parte0.php">
 
       <h2>Avaliação Profissional</h2>
       <br>
