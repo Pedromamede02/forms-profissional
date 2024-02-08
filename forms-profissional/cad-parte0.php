@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verifica se a inserção foi bem-sucedida
         if ($stmt->affected_rows > 0) {
             // Obtendo o id do usuário inserido
-            $id_usuario = $stmt->insert_id;
+            $id_usuario = $con->insert_id;
 
             // Armazenando o id do usuário na sessão
             $_SESSION['id_usuario'] = $id_usuario;

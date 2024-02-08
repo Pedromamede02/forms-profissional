@@ -1,43 +1,81 @@
 <?php
-// Corrigindo o nome do banco de dados na conexão e a variável de conexão
-$con = new mysqli('mysql_db', 'root','root','mysql');
+// Inicia sessão
+session_start();
 
-// Ajuste 'projeto' para o nome correto do seu banco de dados
-
-// Verificar a conexão
+// Conectar ao banco de dados
+$con = new mysqli('mysql_db', 'root', 'root', 'projeto');
 if ($con->connect_error) {
     die("Conexão falhou: " . $con->connect_error);
 }
 
-// Removido 'require_once 'parte1.php';', pois parece não ser relevante para este trecho de código
+// Verifica se os dados do formulário foram enviados
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
+    // Obtém o ID do usuário da sessão
+    if(isset($_SESSION['id_usuario'])) {
+        $id_usuario = $_SESSION['id_usuario'];
 
-// Verifica se o formulário foi submetido
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Aqui, você deveria ter uma lógica para obter o id_usuario de forma dinâmica, talvez da sessão do usuário logado
-    $id_usuario = 1; // Este valor é apenas um exemplo. Substitua pela lógica apropriada para obter o id do usuário
-
-    // Certifique-se de que 'avaliacao1' é o nome correto dos campos de avaliação enviados pelo seu formulário
-    foreach ($_POST['avaliacao1'] as $indice => $resposta) {
-        // A variável $indice pode ser usada diretamente se as perguntas no formulário começarem de 1 e forem sequenciais
-        $id_pergunta = $indice + 1; // Ajuste conforme necessário para corresponder aos IDs das perguntas no banco de dados
-
-        // Corrige a preparação do SQL para inserir na tabela correta, assumindo que seja 'respostas' conforme o esquema ajustado
-        $stmt = $con->prepare("INSERT INTO respostas (id_usuario, id_pergunta, avaliacao) VALUES (?, ?, ?)");
-        if ($stmt === false) {
-            die("Erro ao preparar a instrução: " . $con->error);
-        }
-
-        // Vincula os valores e executa a instrução
-        $stmt->bind_param("iii", $id_usuario, $id_pergunta, $resposta);
-        if (!$stmt->execute()) {
-            echo "Erro ao salvar resposta para a pergunta $id_pergunta: " . $stmt->error . "<br>";
+        // Verifica se os dados do formulário foram enviados corretamente
+        $dados_formulario = $_POST['id'];
+        if (count($dados_formulario) == 8) { // Verifica se todas as 8 perguntas foram respondidas
+            $valido = true;
+            // Loop para validar as respostas
+            foreach ($dados_formulario as $id_pergunta => $resposta) {
+                // Verifica se a resposta está dentro do intervalo de 0 a 10
+                if ($resposta < 0 || $resposta > 10) {
+                    echo "A resposta para a pergunta $id_pergunta deve estar entre 0 e 10.";
+                    $valido = false;
+                    break; // Para o loop se encontrar uma resposta inválida
+                }
+            }
+            if ($valido) {
+                // Loop para inserir as respostas no banco de dados
+                foreach ($dados_formulario as $id_pergunta => $resposta) {
+                    // Prepara a inserção
+                    $stmt = $con->prepare("INSERT INTO id" . str_pad($id_pergunta, 2, '0', STR_PAD_LEFT) . " (id_usuario, id_pergunta, id" . str_pad($id_pergunta, 2, '0', STR_PAD_LEFT) . ") VALUES (?, ?, ?)");
+                    $stmt->bind_param("iii", $id_usuario, $id_pergunta, $resposta);
+                    // Executa a inserção
+                    if (!$stmt->execute()) {
+                        echo "Erro ao salvar resposta para a pergunta $id_pergunta: " . $stmt->error . "<br>";
+                    }
+                }
+                echo "Respostas salvas com sucesso.";
+            }
         } else {
-            echo "Resposta para a pergunta $id_pergunta salva com sucesso!<br>";
+            echo "Por favor, responda todas as perguntas.";
+        }
+    } else {
+        echo "ID do usuário não encontrado na sessão.";
+    }
+} else {
+    echo "Os dados do formulário não foram recebidos corretamente.";
+}
+
+// Verifica se as perguntas já foram inseridas para evitar duplicação
+$checkQuery = "SELECT COUNT(*) as total FROM tbperguntas";
+$checkResult = $con->query($checkQuery);
+if ($checkResult) {
+    $row = $checkResult->fetch_assoc();
+    if ($row['total'] == 0) {
+        // Prepara a inserção das perguntas no banco de dados
+        $insertQuery = "INSERT INTO tbperguntas (texto) VALUES (?)";
+        $stmt = $con->prepare($insertQuery);
+        if ($stmt === false) {
+            die("Erro ao preparar a inserção: " . $con->error);
         }
 
-        // Fecha o statement
-        $stmt->close();
+        // Insere cada pergunta no banco de dados (supondo que $perguntas seja um array de objetos Pergunta)
+        foreach ($perguntas as $pergunta) {
+            $texto = $pergunta->getTexto();
+            $stmt->bind_param("s", $texto);
+            $stmt->execute();
+        }
+
+        echo "Perguntas inseridas com sucesso.";
+    } else {
+        echo "Perguntas já estão presentes no banco de dados.";
     }
+} else {
+    die("Erro ao executar a consulta: " . $con->error);
 }
 
 // Fecha a conexão com o banco de dados
