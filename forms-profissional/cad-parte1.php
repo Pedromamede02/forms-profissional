@@ -19,23 +19,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
         if (count($dados_formulario) == 8) { // Verifica se todas as 8 perguntas foram respondidas
             $valido = true;
             // Loop para validar as respostas
-            foreach ($dados_formulario as $id_pergunta => $resposta) {
+            foreach ($dados_formulario as $id_ask1 => $resposta) {
                 // Verifica se a resposta está dentro do intervalo de 0 a 10
                 if ($resposta < 0 || $resposta > 10) {
-                    echo "A resposta para a pergunta $id_pergunta deve estar entre 0 e 10.";
+                    echo "A resposta para a pergunta $id_ask1 deve estar entre 0 e 10.";
                     $valido = false;
                     break; // Para o loop se encontrar uma resposta inválida
                 }
             }
             if ($valido) {
                 // Loop para inserir as respostas no banco de dados
-                foreach ($dados_formulario as $id_pergunta => $resposta) {
+                foreach ($dados_formulario as $id_ask1 => $resposta) {
                     // Prepara a inserção
-                    $stmt = $con->prepare("INSERT INTO id" . str_pad($id_pergunta, 2, '0', STR_PAD_LEFT) . " (id_usuario, id_pergunta, id" . str_pad($id_pergunta, 2, '0', STR_PAD_LEFT) . ") VALUES (?, ?, ?)");
-                    $stmt->bind_param("iii", $id_usuario, $id_pergunta, $resposta);
+                    $stmt = $con->prepare("INSERT INTO id" . str_pad($id_ask1, 2, '0', STR_PAD_LEFT) . " (id_usuario, id_ask1, id" . str_pad($id_ask1, 2, '0', STR_PAD_LEFT) . ") VALUES (?, ?, ?)");
+                    if ($stmt === false) {
+                        die("Erro ao preparar a inserção: " . $con->error);
+                    }
+                    $stmt->bind_param("iii", $id_usuario, $id_ask1, $resposta);
                     // Executa a inserção
                     if (!$stmt->execute()) {
-                        echo "Erro ao salvar resposta para a pergunta $id_pergunta: " . $stmt->error . "<br>";
+                        echo "Erro ao salvar resposta para a pergunta $id_ask1: " . $stmt->error . "<br>";
                     }
                 }
                 echo "Respostas salvas com sucesso.";
@@ -51,13 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 }
 
 // Verifica se as perguntas já foram inseridas para evitar duplicação
-$checkQuery = "SELECT COUNT(*) as total FROM tbperguntas";
+$checkQuery = "SELECT COUNT(*) as total FROM tbask1";
 $checkResult = $con->query($checkQuery);
 if ($checkResult) {
     $row = $checkResult->fetch_assoc();
     if ($row['total'] == 0) {
         // Prepara a inserção das perguntas no banco de dados
-        $insertQuery = "INSERT INTO tbperguntas (texto) VALUES (?)";
+        $insertQuery = "INSERT INTO tbask1 (texto) VALUES (?)";
         $stmt = $con->prepare($insertQuery);
         if ($stmt === false) {
             die("Erro ao preparar a inserção: " . $con->error);

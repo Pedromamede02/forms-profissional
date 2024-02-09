@@ -6,7 +6,7 @@ if ($con->connect_error) {
 }
 
 // Verifica se as perguntas já foram inseridas para evitar duplicação
-$checkQuery = "SELECT COUNT(*) as total FROM tbperguntas";
+$checkQuery = "SELECT COUNT(*) as total FROM tbask1";
 $checkResult = $con->query($checkQuery);
 if ($checkResult) {
     $row = $checkResult->fetch_assoc();
@@ -24,7 +24,7 @@ if ($checkResult) {
             // Adicione mais perguntas conforme necessário
         ];
 
-        $insertQuery = "INSERT INTO tbperguntas (texto) VALUES (?)";
+        $insertQuery = "INSERT INTO tbask1 (texto) VALUES (?)";
         $stmt = $con->prepare($insertQuery);
         if ($stmt === false) {
             die("Erro ao preparar a inserção: " . $con->error);
@@ -44,6 +44,7 @@ if ($checkResult) {
 // Fecha a conexão com o banco de dados
 $con->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
