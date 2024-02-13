@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,13 +13,10 @@
 
 <body>
 
-
-
-
   <header>
     <br>
     <br>
-    <form id="avaliacaoForm" onsubmit="return validarFormulario()" method="post" action="/cad-parte0.php">
+    <form id="avaliacaoForm" onsubmit="return validarFormulario()" method="post" action="/parte1.php">
 
       <h2>Avaliação Profissional</h2>
       <br>

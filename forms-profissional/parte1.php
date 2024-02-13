@@ -1,49 +1,3 @@
-<?php
-// Conectar ao banco de dados
-$con = new mysqli('mysql_db', 'root', 'root', 'projeto');
-if ($con->connect_error) {
-    die("Conexão falhou: " . $con->connect_error);
-}
-
-// Verifica se as perguntas já foram inseridas para evitar duplicação
-$checkQuery = "SELECT COUNT(*) as total FROM tbask1";
-$checkResult = $con->query($checkQuery);
-if ($checkResult) {
-    $row = $checkResult->fetch_assoc();
-    if ($row['total'] == 0) {
-        // Array de perguntas
-        $perguntas = [
-            "I am quick to see any advantage of new opportunities and take it",
-            "I can work well with a wide range of people",
-            "I am quick to see any advantage of new opportunities and take it",
-            "I can work well with a wide range of people",
-            "I am quick to see any advantage of new opportunities and take it",
-            "I can work well with a wide range of people",
-            "I am quick to see any advantage of new opportunities and take it",
-            "I can work well with a wide range of people",
-            // Adicione mais perguntas conforme necessário
-        ];
-
-        $insertQuery = "INSERT INTO tbask1 (texto) VALUES (?)";
-        $stmt = $con->prepare($insertQuery);
-        if ($stmt === false) {
-            die("Erro ao preparar a inserção: " . $con->error);
-        }
-
-        foreach ($perguntas as $texto) {
-            $stmt->bind_param("s", $texto);
-            $stmt->execute();
-        }
-
-        echo "<script>alert('Perguntas inseridas com sucesso.');</script>";
-    }
-} else {
-    die("Erro ao executar a consulta: " . $con->error);
-}
-
-// Fecha a conexão com o banco de dados
-$con->close();
-?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -53,88 +7,99 @@ $con->close();
     <title>Formulário de Avaliação</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Adiciona opções de resposta a cada seleção de avaliação
-            for (var j = 1; j <= 8; j++) {
-                adicionarOpcoes('id_' + j);
+    document.addEventListener("DOMContentLoaded", function() {
+        for (var j = 1; j <= 8; j++) {
+            adicionarOpcoes('ID_0' + j);
+        }
+        
+        function adicionarOpcoes(selectId) {
+            var select = document.getElementById(selectId);
+            for (var i = 0; i <= 10; i++) {
+                var option = document.createElement('option');
+                option.value = i;
+                option.text = i;
+                select.appendChild(option);
             }
+        }
 
-            
-            function adicionarOpcoes(selectId) {
-                var select = document.getElementById(selectId);
-                for (var i = 0; i <= 10; i++) {
-                    var option = document.createElement('option');
-                    option.value = i;
-                    option.text = i;
-                    select.appendChild(option);
-                }
+        var form = document.getElementById("idForm");
+        form.addEventListener("submit", function(event) {
+            var soma = 0;
+            // Calcula a soma dos valores selecionados
+            for (var k = 1; k <= 8; k++) {
+                soma += parseInt(document.getElementById('ID_0' + k).value, 10);
             }
-
-            var form = document.getElementById("idForm");
-            form.addEventListener("submit", function(event) {
-                var soma = 0;
-                // Calcula a soma dos valores selecionados
-                for (var k = 1; k <= 8; k++) {
-                    soma += parseInt(document.getElementById('id_' + k).value, 10);
-                }
-                // Verifica se a soma das respostas é exatamente 10
-                if (soma !== 10) {
-                    alert('A soma das opções de todas as perguntas deve ser igual a 10. Por favor, ajuste suas escolhas.');
-                    event.preventDefault(); // Impede o envio do formulário
-                }
-            });
+            // Verifica se a soma das respostas é exatamente igual a 10
+            if (soma !== 10) {
+                alert('A soma das opções de todas as perguntas deve ser igual a 10. Por favor, ajuste suas escolhas.');
+                event.preventDefault(); // Impede o envio do formulário
+            }
         });
-    </script>
+    });
+</script>
+
 </head>
 <body>
     <header>
         <form id="idForm" method="post" action="cad-parte1.php">
             <h2>Avaliação Profissional</h2>
             <div class="form">
-                <!-- Exemplo para a pergunta 1 -->
-                <!-- Certifique-se de que cada pergunta tenha um texto único -->
+                <!-- Pergunta 1 -->
                 <div>
                     <p>1-) I am quick to see any advantage of new opportunities and take it</p>
-                    <label for="id_1">Escolha um número de 0 a 10:</label>
-                    <select name="id[1]" id="id_1"></select>
+                    <label for="ID_01">Escolha um número de 0 a 10:</label>
+                    <select name="ID_01" id="ID_01"></select>
                 </div>
-                <!-- Repita os blocos acima para cada pergunta, alterando os IDs/nomes conforme necessário -->
-                <!-- Exemplo para a pergunta 2 -->
+                
+                <!-- Pergunta 2 -->
                 <div>
                     <p>2-) I can work well with a wide range of people</p>
-                    <label for="id_2">Escolha um número de 0 a 10:</label>
-                    <select name="id[2]" id="id_2"></select>
+                    <label for="ID_02">Escolha um número de 0 a 10:</label>
+                    <select name="ID_02" id="ID_02"></select>
                 </div>
-                <!-- Adicione mais perguntas conforme necessário -->
+
+              
+                
+                <!-- Pergunta 3 -->
                 <div>
-                    <p>3-) I can work well with a wide range of people</p>
-                    <label for="id_3">Escolha um número de 0 a 10:</label>
-                    <select name="id[3]" id="id_3"></select>
+                    <p>3-) I am adaptable to changes.</p>
+                    <label for="ID_03">Escolha um número de 0 a 10:</label>
+                    <select name="ID_03" id="ID_03"></select>
                 </div>
+
+                <!-- Pergunta 4 -->
                 <div>
-                    <p>4-) I can work well with a wide range of people</p>
-                    <label for="id_4">Escolha um número de 0 a 10:</label>
-                    <select name="id[4]" id="id_4"></select>
+                    <p>4-) I have strong communication skills.</p>
+                    <label for="ID_04">Escolha um número de 0 a 10:</label>
+                    <select name="ID_04" id="ID_04"></select>
                 </div>
+
+                <!-- Pergunta 5 -->
                 <div>
-                    <p>5-) I can work well with a wide range of people</p>
-                    <label for="id_5">Escolha um número de 0 a 10:</label>
-                    <select name="id[5]" id="id_5"></select>
+                    <p>5-) I am good at problem-solving.</p>
+                    <label for="ID_05">Escolha um número de 0 a 10:</label>
+                    <select name="ID_05" id="ID_05"></select>
                 </div>
+
+                <!-- Pergunta 6 -->
                 <div>
-                    <p>6-) I can work well with a wide range of people</p>
-                    <label for="id_6">Escolha um número de 0 a 10:</label>
-                    <select name="id[6]" id="id_6"></select>
+                    <p>6-) I work well under pressure.</p>
+                    <label for="ID_06">Escolha um número de 0 a 10:</label>
+                    <select name="ID_06" id="ID_06"></select>
                 </div>
+
+                <!-- Pergunta 7 -->
                 <div>
-                    <p>7-) I can work well with a wide range of people</p>
-                    <label for="id_7">Escolha um número de 0 a 10:</label>
-                    <select name="id[7]" id="id_7"></select>
+                    <p>7-) I can effectively lead a team.</p>
+                    <label for="ID_07">Escolha um número de 0 a 10:</label>
+                    <select name="ID_07" id="ID_07"></select>
                 </div>
+
+                <!-- Pergunta 8 -->
                 <div>
-                    <p>8-) I can work well with a wide range of people</p>
-                    <label for="id_8">Escolha um número de 0 a 10:</label>
-                    <select name="id[8]" id="id_8"></select>
+                    <p>8-) I am always eager to learn new skills.</p>
+                    <label for="ID_08">Escolha um número de 0 a 10:</label>
+                    <select name="ID_08" id="ID_08"></select>
                 </div>
             </div>
             <div class="botao">
@@ -144,3 +109,5 @@ $con->close();
     </header>
 </body>
 </html>
+
+        

@@ -1,87 +1,80 @@
 <?php
-// Inicia sessão
 session_start();
 
-// Conectar ao banco de dados
 $con = new mysqli('mysql_db', 'root', 'root', 'projeto');
 if ($con->connect_error) {
     die("Conexão falhou: " . $con->connect_error);
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['respostas'])) {
+    $nome = $_POST['txtNome'];
+    $sobrenome = $_POST['txtSobrenome'];
+    $email = $_POST['txtEmail'];
 
-
-// Verifica se os dados do formulário foram enviados
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
-    // Obtém o ID do usuário da sessão
-    if(isset($_SESSION['id_usuario'])) {
-        $id_usuario = $_SESSION['id_usuario'];
-
-        // Verifica se os dados do formulário foram enviados corretamente
-        $dados_formulario = $_POST['id'];
-        if (count($dados_formulario) == 8) { // Verifica se todas as 8 perguntas foram respondidas
-            $valido = true;
-            // Loop para validar as respostas
-            foreach ($dados_formulario as $id_ask1 => $resposta) {
-                // Verifica se a resposta está dentro do intervalo de 0 a 10
-                if ($resposta < 0 || $resposta > 10) {
-                    echo "A resposta para a pergunta $id_ask1 deve estar entre 0 e 10.";
-                    $valido = false;
-                    break; // Para o loop se encontrar uma resposta inválida
-                }
-            }
-            if ($valido) {
-                // Loop para inserir as respostas no banco de dados
-                foreach ($dados_formulario as $id_ask1 => $resposta) {
-                    // Prepara a inserção
-                    $stmt = $con->prepare("INSERT INTO id" . str_pad($id_ask1, 2, '0', STR_PAD_LEFT) . " (id_usuario, id_ask1, id" . str_pad($id_ask1, 2, '0', STR_PAD_LEFT) . ") VALUES (?, ?, ?)");
-                    if ($stmt === false) {
-                        die("Erro ao preparar a inserção: " . $con->error);
-                    }
-                    $stmt->bind_param("iii", $id_usuario, $id_ask1, $resposta);
-                    // Executa a inserção
-                    if (!$stmt->execute()) {
-                        echo "Erro ao salvar resposta para a pergunta $id_ask1: " . $stmt->error . "<br>";
-                    }
-                }
-                echo "Respostas salvas com sucesso.";
-            }
-        } else {
-            echo "Por favor, responda todas as perguntas.";
-        }
-    } else {
-        echo "ID do usuário não encontrado na sessão.";
+    // Inserir usuário
+    $stmt = $con->prepare("INSERT INTO tbusu (nome, sobrenome, email) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $nome, $sobrenome, $email);
+    if (!$stmt->execute()) {
+        echo "Erro ao inserir usuário: " . $stmt->error;
+        $stmt->close();
+        $con->close();
+        exit;
     }
-} else {
-    echo "Os dados do formulário não foram recebidos corretamente.";
-}
-
+    $id_usuario = $stmt->insert_id;
+    $stmt->close();
+    
 // Verifica se as perguntas já foram inseridas para evitar duplicação
-$checkQuery = "SELECT COUNT(*) as total FROM tbask1";
+$checkQuery = "SELECT COUNT(*) as total FROM avaliacoes"; // Ajuste para a tabela correta
 $checkResult = $con->query($checkQuery);
 if ($checkResult) {
     $row = $checkResult->fetch_assoc();
     if ($row['total'] == 0) {
-        // Prepara a inserção das perguntas no banco de dados
-        $insertQuery = "INSERT INTO tbask1 (texto) VALUES (?)";
+
+        // Array de perguntas
+        $ask = [
+            "I am quick to see any advantage of new opportunities and take it",
+            "I can work well with a wide range of people",
+            "I am quick to see any advantage of new opportunities and take it",
+            "I can work well with a wide range of people",
+            "I am quick to see any advantage of new opportunities and take it",
+            "I can work well with a wide range of people",
+            "I am quick to see any advantage of new opportunities and take it",
+            "I can work well with a wide range of people",
+        ];
+
+        $insertQuery = "INSERT INTO avaliacoes (id_usuario, ask_0, ask_1, ask_2, ask_3, ask_4, ask_5, ask_6, ask_7) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($insertQuery);
         if ($stmt === false) {
             die("Erro ao preparar a inserção: " . $con->error);
         }
 
-        // Insere cada pergunta no banco de dados (supondo que $perguntas seja um array de objetos Pergunta)
-        foreach ($perguntas as $pergunta) {
-            $texto = $pergunta->getTexto();
-            $stmt->bind_param("s", $texto);
-            $stmt->execute();
-        }
+        $id_usuario = 1; // corrigir para pegar o id mais recente // linha de duvida 
+        $stmt->bind_param("issssssss", $id_usuario, $ask_[0], $ask_[1], $ask_[2], $ask_[3], $ask_[4], $ask_[5], $ask_[6], $ask_[7]);
+        $stmt->execute();
 
-        echo "Perguntas inseridas com sucesso.";
-    } else {
-        echo "Perguntas já estão presentes no banco de dados.";
+        echo "<script>alert('asks inseridas com sucesso.');</script>";
     }
 } else {
     die("Erro ao executar a consulta: " . $con->error);
 }
 
-// Fecha a conexão com o banco de dados
+
+    // Processar respostas
+    foreach ($_POST['respostas'] as $campo => $valor) {
+        // O nome do campo já está preparado para corresponder às colunas da tabela `avaliacoes`
+        $stmt = $con->prepare("INSERT INTO avaliacoes (id_usuario, $campo) VALUES (?, ?)");
+        if (!$stmt) {
+            die("Erro ao preparar a inserção: " . $con->error);
+        }
+        $stmt->bind_param("ii", $id_usuario, $valor);
+        if (!$stmt->execute()) {
+            echo "Erro ao inserir avaliação: " . $stmt->error;
+        }
+        $stmt->close();
+    }
+    echo "Respostas salvas com sucesso.";
+} else {
+    echo "Dados do formulário não foram recebidos corretamente.";
+}
+
 $con->close();
 ?>

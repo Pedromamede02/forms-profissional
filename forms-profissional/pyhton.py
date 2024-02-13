@@ -56,7 +56,7 @@ try:
     """)
     row = cursor.fetchone()
 
-    if row:  # Este bloco deve estar indentado ao mesmo nível do try acima
+    if row:  
         email_usuario, *avaliacoes = row
     modelador = avaliacoes[0] + avaliacoes[8]  # Avaliação 0 e 8
     implementador = avaliacoes[1] + avaliacoes[9]  # Avaliação 1 e 9
@@ -65,7 +65,7 @@ try:
     investigador = avaliacoes[4] + avaliacoes[12]  # Avaliação 4 e 12
     criativo = avaliacoes[5] + avaliacoes[13]  # Avaliação 5 e 13
     completador = avaliacoes[6] + avaliacoes[14]  # Avaliação 6 e 14
-    inventor = avaliacoes[7] + avaliacoes[15]  # Avaliação 7 e 15 (ajustar se necessário)
+    inventor = avaliacoes[7] + avaliacoes[15]  # Avaliação 7 e 15 ajustar se necessário
 
     # Preparando a mensagem de email com as pontuações
     mensagem_email = 'Resultado da Avaliação de Personalidade:\n\n'
