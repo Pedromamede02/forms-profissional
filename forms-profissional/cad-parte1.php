@@ -8,6 +8,7 @@ if ($con->connect_error) {
     die("Conexão falhou: " . $con->connect_error);
 }
 
+
 // Verifica se os dados do formulário foram enviados
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     // Obtém o ID do usuário da sessão
