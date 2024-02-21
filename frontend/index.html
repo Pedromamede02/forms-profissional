@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluation Form</title>
+  <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+  <header>
+    <br>
+    <br>
+    <form id="evaluationForm">
+      <h2>Professional Assessment</h2>
+      <br>
+      <label>
+        Name: <input type="text" name="txtName" placeholder="Type your name:" required>
+      </label>
+      <br>
+      <br>
+      <label>
+        Surname: <input type="text" name="txtSurname" placeholder="Type your surname:" required>
+      </label>
+      <br>
+      <br>
+      <label>
+        E-mail: <input type="email" name="txtEmail" placeholder="Type your E-mail:" required>
+      </label>
+      <br>
+      <br>
+      <div class="button">
+        <input type="submit" value="Send">
+      </div>
+    </form>
+
+    <script>
+      document.getElementById('evaluationForm').addEventListener('submit', function(event) {
+          event.preventDefault(); 
+  
+          const formData = new FormData(event.target);
+
+          const txtname = formData.get('txtName');
+          const txtsurname = formData.get('txtSurname');
+          const txtEmail = formData.get('txtEmail');
+          const redirectURL = `forms.html?txtname=${encodeURIComponent(txtname)}&txtsurname=${encodeURIComponent(txtsurname)}&txtEmail=${encodeURIComponent(txtEmail)}`;
+
+          window.location.href = redirectURL;
+        });
+    </script>
+</body>
+
+</html>

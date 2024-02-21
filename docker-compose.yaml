@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  web-frontend-service:
+    build: ./frontend/
+    container_name: web-frontend
+    image: web-frontend-img:latest
+    cpus: 2
+    mem_limit: 4096M
+    ports:
+      - "8080:80"
+    networks:
+      - webApp
+
+  web-mysql-service:
+    build: ./database/
+    platform: linux/amd64
+    container_name: web-mysql
+    image: web-mysql-img:latest
+    command: --default-authentication-plugin=mysql_native_password
+    cpus: 2
+    mem_limit: 4096M
+    ports:
+      - "3310:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - webApp
+
+  web-backend-service:
+    build: ./backend/
+    command: npm start
+    container_name: web-backend
+    image: web-backend-img:latest
+    cpus: 2
+    mem_limit: 4096M
+    ports:
+      - "3030:3000"
+    depends_on:
+      - "web-mysql-service"
+    networks:
+      - webApp
+    restart: always
+
+networks:
+  webApp:
+    driver: bridge
