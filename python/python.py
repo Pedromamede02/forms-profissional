@@ -6,9 +6,10 @@ from email.mime.text import MIMEText
 # Configurações do banco de dados
 db_config = {
     'user': 'root',
-    'password': '',  
+    'password': 'root',  
     'host': 'localhost',
-    'database': 'projeto',
+    'database': 'project',
+    'porta': '3310',
     'raise_on_warnings': True
 }
 
@@ -43,20 +44,22 @@ try:
 
     cursor.execute("""
     SELECT 
-        u.email,
-        a.avaliacao1, a.avaliacao2, a.avaliacao3, a.avaliacao4,
-        a.avaliacao5, a.avaliacao6, a.avaliacao7, a.avaliacao8,
-        b.avaliacao9, b.avaliacao10, b.avaliacao11, b.avaliacao12,
-        b.avaliacao13, b.avaliacao14, b.avaliacao15, b.avaliacao16
-    FROM tbusu u
-    INNER JOIN avaliacoes a ON u.id = a.id_usuario
-    INNER JOIN avaliacoes2 b ON u.id = b.id_usuario
-    ORDER BY a.data_submissao DESC, b.data_submissao DESC
+        id_user,
+         ID_01_RI,
+         ID_02_TW,
+         ID_03_PL,
+         ID_04_CO,
+         ID_05_CF,
+         ID_06_SH,
+         ID_07_IM,
+         ID_08_ME
+    FROM tbTest
+    ORDER BY test_date DESC
     LIMIT 1
-    """)
+""")
     row = cursor.fetchone()
 
-    if row:  # Este bloco deve estar indentado ao mesmo nível do try acima
+    if row:  
         email_usuario, *avaliacoes = row
     modelador = avaliacoes[0] + avaliacoes[8]  # Avaliação 0 e 8
     implementador = avaliacoes[1] + avaliacoes[9]  # Avaliação 1 e 9
