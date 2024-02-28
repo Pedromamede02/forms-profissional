@@ -15,8 +15,8 @@
                 <!-- Question 1 -->
                 <div>
                     <p>9-) I am not at ease with meetings unless they are well structured and controlled, and generally well conducted.</p>
-                    <label for="ID_09">Choose a number from 0 to 10:</label>
-                    <select name="ID_09" id="ID_09"></select>
+                    <label for="ID_9">Choose a number from 0 to 10:</label>
+                    <select name="ID_9" id="ID_9"></select>
                 </div>
                 
                 <!-- Question 2 -->
@@ -76,8 +76,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            for (var j = 1; j <= 8; j++) {
-                adicionarOpcoes('ID_0' + j);
+            for (var j = 9; j <= 16; j++) {
+                adicionarOpcoes('ID_' + j);
             }
             
             function adicionarOpcoes(selectId) {
@@ -114,14 +114,14 @@
                     const formData = new FormData(event.target);
 
                     let jsonFormData={
-                        ID_01: formData.get('ID_01'),
-                        ID_02: formData.get('ID_02'),
-                        ID_03: formData.get('ID_03'),
-                        ID_04: formData.get('ID_04'),
-                        ID_05: formData.get('ID_05'),
-                        ID_06: formData.get('ID_06'),
-                        ID_07: formData.get('ID_07'),
-                        ID_08: formData.get('ID_08'),
+                        ID_9: formData.get('ID_9'),
+                        ID_10: formData.get('ID_10'),
+                        ID_11: formData.get('ID_11'),
+                        ID_12: formData.get('ID_12'),
+                        ID_13: formData.get('ID_13'),
+                        ID_14: formData.get('ID_14'),
+                        ID_15: formData.get('ID_15'),
+                        ID_16: formData.get('ID_16'),
                     }
 
                     const url = `http://localhost:3030/form?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
