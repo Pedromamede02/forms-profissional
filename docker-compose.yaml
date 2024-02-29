@@ -31,8 +31,8 @@ services:
     command: npm start
     container_name: web-backend
     image: web-backend-img:latest
-    cpus: 1
-    mem_limit: 596M
+    cpus: 2
+    mem_limit: 796M
     ports:
       - "3030:3000"
     depends_on:
@@ -40,6 +40,17 @@ services:
     networks:
       - webApp
     restart: always
+
+  web-python-service:
+    build: ./python/
+    container_name: web-python
+    image: web-python-img:latest
+    cpus: 1
+    mem_limit: 596M
+    ports:
+      - "4040:4000"
+    networks:
+      - webApp
 
 networks:
   webApp:

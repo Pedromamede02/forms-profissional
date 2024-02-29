@@ -11,59 +11,59 @@
     <header>
         <form id="idForm">
             <h2>Professional Assessment</h2>
-            <div class="form">
+            <div class="form" id="questionsContainer">
                 <!-- Question 1 -->
                 <div>
-                    <p>1-) I am quick to see any advantage of new opportunities and take it</p>
+                    <label for="ASK_ID_01">1-) I am quick to see any advantage of new opportunities and take it</label>
                     <label for="ID_01">Choose a number from 0 to 10:</label>
                     <select name="ID_01" id="ID_01"></select>
                 </div>
                 
                 <!-- Question 2 -->
                 <div>
-                    <p>2-) I can work well with a wide range of people</p>
+                    <label for="ASK_ID_02">2-) I can work well with a wide range of people</label>
                     <label for="ID_02">Choose a number from 0 to 10:</label>
                     <select name="ID_02" id="ID_02"></select>
                 </div>
 
                 <!-- Question 3 -->
                 <div>
-                    <p>3-) I am adaptable to changes.</p>
+                    <label for="ASK_ID_03">3-) I am adaptable to changes.</label>
                     <label for="ID_03">Choose a number from 0 to 10:</label>
                     <select name="ID_03" id="ID_03"></select>
                 </div>
 
                 <!-- Question 4 -->
                 <div>
-                    <p>4-) I have strong communication skills.</p>
+                    <label for="ASK_ID_04">4-) I have strong communication skills.</label>
                     <label for="ID_04">Choose a number from 0 to 10:</label>
                     <select name="ID_04" id="ID_04"></select>
                 </div>
 
                 <!-- Question 5 -->
                 <div>
-                    <p>5-) I am good at problem-solving.</p>
+                    <label for="ASK_ID_05">5-) I am good at problem-solving.</label>
                     <label for="ID_05">Choose a number from 0 to 10:</label>
                     <select name="ID_05" id="ID_05"></select>
                 </div>
 
                 <!-- Question 6 -->
                 <div>
-                    <p>6-) I work well under pressure.</p>
+                    <label for="ASK_ID_06">6-) I work well under pressure.</label>
                     <label for="ID_06">Choose a number from 0 to 10:</label>
                     <select name="ID_06" id="ID_06"></select>
                 </div>
 
                 <!-- Question 7 -->
                 <div>
-                    <p>7-) I can effectively lead a team.</p>
+                    <label for="ASK_ID_07">7-) I can effectively lead a team.</label>
                     <label for="ID_07">Choose a number from 0 to 10:</label>
                     <select name="ID_07" id="ID_07"></select>
                 </div>
 
                 <!-- Question 8 -->
                 <div>
-                    <p>8-) I am always eager to learn new skills.</p>
+                    <label for="ASK_ID_08">8-) I am always eager to learn new skills.</label>
                     <label for="ID_08">Choose a number from 0 to 10:</label>
                     <select name="ID_08" id="ID_08"></select>
                 </div>
@@ -79,6 +79,8 @@
             for (var j = 1; j <= 8; j++) {
                 adicionarOpcoes('ID_0' + j);
             }
+
+            randomizeQuestions();
             
             function adicionarOpcoes(selectId) {
                 var select = document.getElementById(selectId);
@@ -88,6 +90,19 @@
                     option.text = i;
                     select.appendChild(option);
                 }
+            }
+
+            function randomizeQuestions() {
+                var questionsContainer = document.getElementById('questionsContainer');
+                var questions = Array.from(questionsContainer.children);
+                
+                questions.sort(function() {
+                    return 0.5 - Math.random();
+                });
+                
+                questions.forEach(function(question) {
+                    questionsContainer.appendChild(question);
+                });
             }
 
             var form = document.getElementById("idForm");
@@ -114,6 +129,15 @@
                     const formData = new FormData(event.target);
 
                     let jsonFormData={
+                        ASK_ID_01: document.querySelector('label[for="ASK_ID_01"]').textContent,
+                        ASK_ID_02: document.querySelector('label[for="ASK_ID_02"]').textContent,
+                        ASK_ID_03: document.querySelector('label[for="ASK_ID_03"]').textContent,
+                        ASK_ID_04: document.querySelector('label[for="ASK_ID_04"]').textContent,
+                        ASK_ID_05: document.querySelector('label[for="ASK_ID_05"]').textContent,
+                        ASK_ID_06: document.querySelector('label[for="ASK_ID_06"]').textContent,
+                        ASK_ID_07: document.querySelector('label[for="ASK_ID_07"]').textContent,
+                        ASK_ID_08: document.querySelector('label[for="ASK_ID_08"]').textContent,
+
                         ID_01: formData.get('ID_01'),
                         ID_02: formData.get('ID_02'),
                         ID_03: formData.get('ID_03'),
@@ -124,7 +148,9 @@
                         ID_08: formData.get('ID_08'),
                     }
 
-                    const url = `http://localhost:3030/form?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
+                    const url = `http://localhost:3030/RamData`;
+                    const redirectURL = `forms2.html?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
+                    
                     fetch(url, {
                         method: 'POST',
                         body: JSON.stringify(jsonFormData),
@@ -133,7 +159,13 @@
                             'Content-Type': 'application/json'
                         }
                     })
-                
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = redirectURL;
+                        } else {
+                            console.error('Error:', response.status);
+                        }
+                    })
                 }
             });
         });

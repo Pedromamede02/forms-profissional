@@ -41,26 +41,6 @@ CREATE TABLE IF NOT EXISTS tbTest(
     FOREIGN KEY (id_user) REFERENCES tbuser(id)
 );
 
-CREATE TABLE IF NOT EXISTS tbAnswers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
-    test1 INT CHECK (test1 BETWEEN 0 AND 10),
-    test2 INT CHECK (test2 BETWEEN 0 AND 10),
-    test3 INT CHECK (test3 BETWEEN 0 AND 10),
-    test4 INT CHECK (test4 BETWEEN 0 AND 10),
-    test5 INT CHECK (test5 BETWEEN 0 AND 10),
-    test6 INT CHECK (test6 BETWEEN 0 AND 10),
-    test7 INT CHECK (test7 BETWEEN 0 AND 10),
-    test8 INT CHECK (test8 BETWEEN 0 AND 10),
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES tbuser(id)
-);
-
-CREATE TABLE IF NOT EXISTS tbQuestions (
-    tbQuestions_id INT AUTO_INCREMENT PRIMARY KEY,
-    tbQuestions_text VARCHAR(255) NOT NULL
-);
-
 /* segundo parte */
 
 CREATE TABLE IF NOT EXISTS tbTest2(
@@ -95,27 +75,7 @@ CREATE TABLE IF NOT EXISTS tbTest2(
     FOREIGN KEY (id_user) REFERENCES tbuser(id)
 );
 
-CREATE TABLE IF NOT EXISTS tbAnswers2 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
-    test9 INT CHECK (test9 BETWEEN 0 AND 10),
-    test10 INT CHECK (test10 BETWEEN 0 AND 10),
-    test11 INT CHECK (test11 BETWEEN 0 AND 10),
-    test12 INT CHECK (test12 BETWEEN 0 AND 10),
-    test13 INT CHECK (test13 BETWEEN 0 AND 10),
-    test14 INT CHECK (test14 BETWEEN 0 AND 10),
-    test15 INT CHECK (test15 BETWEEN 0 AND 10),
-    test16 INT CHECK (test16 BETWEEN 0 AND 10),
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES tbuser(id)
-);
-
-CREATE TABLE IF NOT EXISTS tbQuestions2 (
-    tbQuestions_id2 INT AUTO_INCREMENT PRIMARY KEY,
-    tbQuestions_text2 VARCHAR(255) NOT NULL
-);
-
-/* terceira parte 
+/* terceira parte */
 
 CREATE TABLE IF NOT EXISTS tbTest3(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -149,28 +109,6 @@ CREATE TABLE IF NOT EXISTS tbTest3(
     FOREIGN KEY (id_user) REFERENCES tbuser(id)
 );
 
-CREATE TABLE IF NOT EXISTS tbAnswers2 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
-    test17 INT CHECK (test17 BETWEEN 0 AND 10),
-    test18 INT CHECK (test18 BETWEEN 0 AND 10),
-    test19 INT CHECK (test19 BETWEEN 0 AND 10),
-    test20 INT CHECK (test20 BETWEEN 0 AND 10),
-    test21 INT CHECK (test21 BETWEEN 0 AND 10),
-    test22 INT CHECK (test22 BETWEEN 0 AND 10),
-    test23 INT CHECK (test23 BETWEEN 0 AND 10),
-    test24 INT CHECK (test24 BETWEEN 0 AND 10),
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES tbuser(id)
-);
-
-CREATE TABLE IF NOT EXISTS tbQuestions3 (
-    tbQuestions_id3 INT AUTO_INCREMENT PRIMARY KEY,
-    tbQuestions_text3 VARCHAR(255) NOT NULL
-);
-
-
-
 /* quarta parte */
 
 CREATE TABLE IF NOT EXISTS tbTest4(
@@ -203,26 +141,6 @@ CREATE TABLE IF NOT EXISTS tbTest4(
     
     test_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_user) REFERENCES tbuser(id)
-);
-
-CREATE TABLE IF NOT EXISTS tbAnswers4 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
-    test25 INT CHECK (test25 BETWEEN 0 AND 10),
-    test26 INT CHECK (test26 BETWEEN 0 AND 10),
-    test27 INT CHECK (test27 BETWEEN 0 AND 10),
-    test28 INT CHECK (test28 BETWEEN 0 AND 10),
-    test29 INT CHECK (test29 BETWEEN 0 AND 10),
-    test30 INT CHECK (test30 BETWEEN 0 AND 10),
-    test31 INT CHECK (test31 BETWEEN 0 AND 10),
-    test32 INT CHECK (test32 BETWEEN 0 AND 10),
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES tbuser(id)
-);
-
-CREATE TABLE IF NOT EXISTS tbQuestions4 (
-    tbQuestions_id4 INT AUTO_INCREMENT PRIMARY KEY,
-    tbQuestions_text4 VARCHAR(255) NOT NULL
 );
 
 /* quinta parte */
@@ -259,26 +177,6 @@ CREATE TABLE IF NOT EXISTS tbTest5(
     FOREIGN KEY (id_user) REFERENCES tbuser(id)
 );
 
-CREATE TABLE IF NOT EXISTS tbAnswers5 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
-    test33 INT CHECK (tes33 BETWEEN 0 AND 10),
-    test34 INT CHECK (test34 BETWEEN 0 AND 10),
-    test35 INT CHECK (test35 BETWEEN 0 AND 10),
-    test36 INT CHECK (test36 BETWEEN 0 AND 10),
-    test37 INT CHECK (test37 BETWEEN 0 AND 10),
-    test38 INT CHECK (test38 BETWEEN 0 AND 10),
-    test39 INT CHECK (test39 BETWEEN 0 AND 10),
-    test40 INT CHECK (test40 BETWEEN 0 AND 10),
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES tbuser(id)
-);
-
-CREATE TABLE IF NOT EXISTS tbQuestions5 (
-    tbQuestions_id5 INT AUTO_INCREMENT PRIMARY KEY,
-    tbQuestions_text5 VARCHAR(255) NOT NULL
-);
-
 /* sexta parte */
 
 CREATE TABLE IF NOT EXISTS tbTest6(
@@ -313,27 +211,6 @@ CREATE TABLE IF NOT EXISTS tbTest6(
     FOREIGN KEY (id_user) REFERENCES tbuser(id)
 );
 
-CREATE TABLE IF NOT EXISTS tbAnswers6 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
-    test41 INT CHECK (test41 BETWEEN 0 AND 10),
-    test42 INT CHECK (test42 BETWEEN 0 AND 10),
-    test43 INT CHECK (test43 BETWEEN 0 AND 10),
-    test44 INT CHECK (test44 BETWEEN 0 AND 10),
-    test45 INT CHECK (test45 BETWEEN 0 AND 10),
-    test46 INT CHECK (test46 BETWEEN 0 AND 10),
-    test47 INT CHECK (test47 BETWEEN 0 AND 10),
-    test48 INT CHECK (test48 BETWEEN 0 AND 10),
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES tbuser(id)
-);
-
-CREATE TABLE IF NOT EXISTS tbQuestions6 (
-    tbQuestions_id6 INT AUTO_INCREMENT PRIMARY KEY,
-    tbQuestions_text6 VARCHAR(255) NOT NULL
-);
-
-
 /* setima parte */
 
 CREATE TABLE IF NOT EXISTS tbTest7(
@@ -367,25 +244,3 @@ CREATE TABLE IF NOT EXISTS tbTest7(
     test_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_user) REFERENCES tbuser(id)
 );
-
-CREATE TABLE IF NOT EXISTS tbAnswers2 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
-    test49 INT CHECK (test49 BETWEEN 0 AND 10),
-    test50 INT CHECK (test50 BETWEEN 0 AND 10),
-    test51 INT CHECK (test51 BETWEEN 0 AND 10),
-    test52 INT CHECK (test52 BETWEEN 0 AND 10),
-    test53 INT CHECK (test53 BETWEEN 0 AND 10),
-    test54 INT CHECK (test54 BETWEEN 0 AND 10),
-    test55 INT CHECK (test55 BETWEEN 0 AND 10),
-    test56 INT CHECK (test56 BETWEEN 0 AND 10),
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES tbuser(id)
-);
-
-CREATE TABLE IF NOT EXISTS tbQuestions7 (
-    tbQuestions_id7 INT AUTO_INCREMENT PRIMARY KEY,
-    tbQuestions_text7 VARCHAR(255) NOT NULL
-);
-
-*/

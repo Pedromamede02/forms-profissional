@@ -11,59 +11,59 @@
     <header>
         <form id="idForm">
             <h2>Professional Assessment</h2>
-            <div class="form">
+            <div class="form" id="questionsContainer">
                 <!-- Question 1 -->
                 <div>
-                    <p>25-) I have a quiet interest in getting to know colleagues better.  </p>
+                    <label for="ASK_ID_25">25-) I have a quiet interest in getting to know colleagues better.  </label>
                     <label for="ID_25">Choose a number from 0 to 10:</label>
                     <select name="ID_25" id="ID_25"></select>
                 </div>
                 
                 <!-- Question 2 -->
                 <div>
-                    <p>26-) I am not reluctant to challenge the views of others or to hold a minority view myself. </p>
+                    <label for="ASK_ID_26">26-) I am not reluctant to challenge the views of others or to hold a minority view myself. </label>
                     <label for="ID_26">Choose a number from 0 to 10:</label>
                     <select name="ID_26" id="ID_26"></select>
                 </div>
 
                 <!-- Question 3 -->
                 <div>
-                    <p>27-) I can usually find a line of argument to refute unsound propositions. </p>
+                    <label for="ASK_ID_27">27-) I can usually find a line of argument to refute unsound propositions. </label>
                     <label for="ID_27">Choose a number from 0 to 10:</label>
                     <select name="ID_27" id="ID_27"></select>
                 </div>
 
                 <!-- Question 4 -->
                 <div>
-                    <p>28-) I think I have a talent for making things work once a plan has to be put into action. </p>
+                    <label for="ASK_ID_28">28-) I think I have a talent for making things work once a plan has to be put into action. </label>
                     <label for="ID_28">Choose a number from 0 to 10:</label>
                     <select name="ID_28" id="ID_28"></select>
                 </div>
 
                 <!-- Question 5 -->
                 <div>
-                    <p>29-) I have a tendency to avoid the obvious and to come out with the unexpected. </p>
+                    <label for="ASK_ID_29">29-) I have a tendency to avoid the obvious and to come out with the unexpected. </label>
                     <label for="ID_29">Choose a number from 0 to 10:</label>
                     <select name="ID_29" id="ID_29"></select>
                 </div>
 
                 <!-- Question 6 -->
                 <div>
-                    <p>30-) I bring a touch of perfectionism to any job I undertake. </p>
+                    <label for="ASK_ID_30">30-) I bring a touch of perfectionism to any job I undertake. </label>
                     <label for="ID_30">Choose a number from 0 to 10:</label>
                     <select name="ID_30" id="ID_30"></select>
                 </div>
 
                 <!-- Question 7 -->
                 <div>
-                    <p>31-) I am ready to make use of contacts outside the group itself. </p>
+                    <label for="ASK_ID_31">31-) I am ready to make use of contacts outside the group itself. </label>
                     <label for="ID_31">Choose a number from 0 to 10:</label>
                     <select name="ID_31" id="ID_31"></select>
                 </div>
 
                 <!-- Question 8 -->
                 <div>
-                    <p>32-) While I am interested in all views I have no hesitation in making up my mind once a decision has to be made. </p>
+                    <label for="ASK_ID_32">32-) While I am interested in all views I have no hesitation in making up my mind once a decision has to be made. </label>
                     <label for="ID_32">Choose a number from 0 to 10:</label>
                     <select name="ID_32" id="ID_32"></select>
                 </div>
@@ -76,9 +76,11 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            for (var j = 1; j <= 8; j++) {
-                adicionarOpcoes('ID_0' + j);
+            for (var j = 25; j <= 32; j++) {
+                adicionarOpcoes('ID_' + j);
             }
+
+            randomizeQuestions()
             
             function adicionarOpcoes(selectId) {
                 var select = document.getElementById(selectId);
@@ -90,12 +92,25 @@
                 }
             }
 
+            function randomizeQuestions() {
+                var questionsContainer = document.getElementById('questionsContainer');
+                var questions = Array.from(questionsContainer.children);
+                
+                questions.sort(function() {
+                    return 0.5 - Math.random();
+                });
+                
+                questions.forEach(function(question) {
+                    questionsContainer.appendChild(question);
+                });
+            }
+
             var form = document.getElementById("idForm");
             form.addEventListener("submit", function(event) {
                 var soma = 0;
                 // Calculates the sum of selected values
-                for (var k = 1; k <= 8; k++) {
-                    soma += parseInt(document.getElementById('ID_0' + k).value, 10);
+                for (var k = 25; k <= 32; k++) {
+                    soma += parseInt(document.getElementById('ID_' + k).value, 10);
                 }
                 // Checks if the sum of the answers is exactly equal to 10
                 if (soma !== 10) {
@@ -114,17 +129,28 @@
                     const formData = new FormData(event.target);
 
                     let jsonFormData={
-                        ID_01: formData.get('ID_01'),
-                        ID_02: formData.get('ID_02'),
-                        ID_03: formData.get('ID_03'),
-                        ID_04: formData.get('ID_04'),
-                        ID_05: formData.get('ID_05'),
-                        ID_06: formData.get('ID_06'),
-                        ID_07: formData.get('ID_07'),
-                        ID_08: formData.get('ID_08'),
+                        ASK_ID_25: document.querySelector('label[for="ASK_ID_25"]').textContent,
+                        ASK_ID_26: document.querySelector('label[for="ASK_ID_26"]').textContent,
+                        ASK_ID_27: document.querySelector('label[for="ASK_ID_27"]').textContent,
+                        ASK_ID_28: document.querySelector('label[for="ASK_ID_28"]').textContent,
+                        ASK_ID_29: document.querySelector('label[for="ASK_ID_29"]').textContent,
+                        ASK_ID_30: document.querySelector('label[for="ASK_ID_30"]').textContent,
+                        ASK_ID_31: document.querySelector('label[for="ASK_ID_31"]').textContent,
+                        ASK_ID_32: document.querySelector('label[for="ASK_ID_32"]').textContent,
+
+                        ID_25: formData.get('ID_25'),
+                        ID_26: formData.get('ID_26'),
+                        ID_27: formData.get('ID_27'),
+                        ID_28: formData.get('ID_28'),
+                        ID_29: formData.get('ID_29'),
+                        ID_30: formData.get('ID_30'),
+                        ID_31: formData.get('ID_31'),
+                        ID_32: formData.get('ID_32'),
                     }
 
-                    const url = `http://localhost:3030/form?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
+                    const url = `http://localhost:3030/RamData4`;
+                    const redirectURL = `forms5.html?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
+                    
                     fetch(url, {
                         method: 'POST',
                         body: JSON.stringify(jsonFormData),
@@ -134,20 +160,12 @@
                         }
                     })
                     .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }else{
-                            alert('Registered Data!')
+                        if (response.ok) {
+                            window.location.href = redirectURL;
+                        } else {
+                            console.error('Error:', response.status);
                         }
-                            
-                        return response.text();
                     })
-                    .then(data => {
-                        console.log('Form submitted successfully:', data);
-                    })
-                    .catch(error => {
-                        console.error('There was a problem submitting the form:', error);
-                    });
                 }
             });
         });

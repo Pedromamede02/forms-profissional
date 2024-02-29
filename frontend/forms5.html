@@ -11,59 +11,59 @@
     <header>
         <form id="idForm">
             <h2>Professional Assessment</h2>
-            <div class="form">
+            <div class="form" id="questionsContainer">
                 <!-- Question 1 -->
                 <div>
-                    <p>33-) I enjoy analysing situations and weighing up all the possible choices.  </p>
+                    <label for="ASK_ID_33">33-) I enjoy analysing situations and weighing up all the possible choices.  </label>
                     <label for="ID_33">Choose a number from 0 to 10:</label>
                     <select name="ID_33" id="ID_33"></select>
                 </div>
                 
                 <!-- Question 2 -->
                 <div>
-                    <p>34-) I am interested in finding practical solutions to problems. </p>
+                    <label for="ASK_ID_34">34-) I am interested in finding practical solutions to problems. </label>
                     <label for="ID_34">Choose a number from 0 to 10:</label>
                     <select name="ID_34" id="ID_34"></select>
                 </div>
 
                 <!-- Question 3 -->
                 <div>
-                    <p>35-) I like to feel that I am fostering good working relationships. </p>
+                    <label for="ASK_ID_35">35-) I like to feel that I am fostering good working relationships. </label>
                     <label for="ID_35">Choose a number from 0 to 10:</label>
                     <select name="ID_35" id="ID_35"></select>
                 </div>
 
                 <!-- Question 4 -->
                 <div>
-                    <p>36-) I can have a strong influence on decisions.</p>
+                    <label for="ASK_ID_36">36-) I can have a strong influence on decisions.</label>
                     <label for="ID_36">Choose a number from 0 to 10:</label>
                     <select name="ID_36" id="ID_36"></select>
                 </div>
 
                 <!-- Question 5 -->
                 <div>
-                    <p>37-)I can meet people who may have something new to offer. </p>
+                    <label for="ASK_ID_37">37-)I can meet people who may have something new to offer. </label>
                     <label for="ID_37">Choose a number from 0 to 10:</label>
                     <select name="ID_37" id="ID_37"></select>
                 </div>
 
                 <!-- Question 6 -->
                 <div>
-                    <p>38-) I can get people to agree on a necessary course of action. </p>
+                    <label for="ASK_ID_38">38-) I can get people to agree on a necessary course of action. </label>
                     <label for="ID_38">Choose a number from 0 to 10:</label>
                     <select name="ID_38" id="ID_38"></select>
                 </div>
 
                 <!-- Question 7 -->
                 <div>
-                    <p>39-) I feel in my element where I can give a task my full attention. </p>
+                    <label for="ASK_ID_39">39-) I feel in my element where I can give a task my full attention. </label>
                     <label for="ID_39">Choose a number from 0 to 10:</label>
                     <select name="ID_39" id="ID_39"></select>
                 </div>
 
                 <!-- Question 8 -->
                 <div>
-                    <p>40-) I like to find a field that stretches my imagination. </p>
+                    <label for="ASK_ID_40">40-) I like to find a field that stretches my imagination. </label>
                     <label for="ID_40">Choose a number from 0 to 10:</label>
                     <select name="ID_40" id="ID_40"></select>
                 </div>
@@ -76,9 +76,11 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            for (var j = 1; j <= 8; j++) {
-                adicionarOpcoes('ID_0' + j);
+            for (var j = 33; j <= 40; j++) {
+                adicionarOpcoes('ID_' + j);
             }
+
+            randomizeQuestions()
             
             function adicionarOpcoes(selectId) {
                 var select = document.getElementById(selectId);
@@ -90,12 +92,25 @@
                 }
             }
 
+            function randomizeQuestions() {
+                var questionsContainer = document.getElementById('questionsContainer');
+                var questions = Array.from(questionsContainer.children);
+                
+                questions.sort(function() {
+                    return 0.5 - Math.random();
+                });
+                
+                questions.forEach(function(question) {
+                    questionsContainer.appendChild(question);
+                });
+            }
+
             var form = document.getElementById("idForm");
             form.addEventListener("submit", function(event) {
                 var soma = 0;
                 // Calculates the sum of selected values
-                for (var k = 1; k <= 8; k++) {
-                    soma += parseInt(document.getElementById('ID_0' + k).value, 10);
+                for (var k = 33; k <= 40; k++) {
+                    soma += parseInt(document.getElementById('ID_' + k).value, 10);
                 }
                 // Checks if the sum of the answers is exactly equal to 10
                 if (soma !== 10) {
@@ -114,17 +129,28 @@
                     const formData = new FormData(event.target);
 
                     let jsonFormData={
-                        ID_01: formData.get('ID_01'),
-                        ID_02: formData.get('ID_02'),
-                        ID_03: formData.get('ID_03'),
-                        ID_04: formData.get('ID_04'),
-                        ID_05: formData.get('ID_05'),
-                        ID_06: formData.get('ID_06'),
-                        ID_07: formData.get('ID_07'),
-                        ID_08: formData.get('ID_08'),
+                        ASK_ID_33: document.querySelector('label[for="ASK_ID_33"]').textContent,
+                        ASK_ID_34: document.querySelector('label[for="ASK_ID_34"]').textContent,
+                        ASK_ID_35: document.querySelector('label[for="ASK_ID_35"]').textContent,
+                        ASK_ID_36: document.querySelector('label[for="ASK_ID_36"]').textContent,
+                        ASK_ID_37: document.querySelector('label[for="ASK_ID_37"]').textContent,
+                        ASK_ID_38: document.querySelector('label[for="ASK_ID_38"]').textContent,
+                        ASK_ID_39: document.querySelector('label[for="ASK_ID_39"]').textContent,
+                        ASK_ID_40: document.querySelector('label[for="ASK_ID_40"]').textContent,
+
+                        ID_33: formData.get('ID_33'),
+                        ID_34: formData.get('ID_34'),
+                        ID_35: formData.get('ID_35'),
+                        ID_36: formData.get('ID_36'),
+                        ID_37: formData.get('ID_37'),
+                        ID_38: formData.get('ID_38'),
+                        ID_39: formData.get('ID_39'),
+                        ID_40: formData.get('ID_40'),
                     }
 
-                    const url = `http://localhost:3030/form?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
+                    const url = `http://localhost:3030/RamData5`;
+                    const redirectURL = `forms6.html?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
+                    
                     fetch(url, {
                         method: 'POST',
                         body: JSON.stringify(jsonFormData),
@@ -134,20 +160,12 @@
                         }
                     })
                     .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }else{
-                            alert('Registered Data!')
+                        if (response.ok) {
+                            window.location.href = redirectURL;
+                        } else {
+                            console.error('Error:', response.status);
                         }
-                            
-                        return response.text();
                     })
-                    .then(data => {
-                        console.log('Form submitted successfully:', data);
-                    })
-                    .catch(error => {
-                        console.error('There was a problem submitting the form:', error);
-                    });
                 }
             });
         });

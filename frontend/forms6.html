@@ -11,59 +11,59 @@
     <header>
         <form id="idForm">
             <h2>Professional Assessment</h2>
-            <div class="form">
+            <div class="form" id="questionsContainer">
                 <!-- Question 1 -->
                 <div>
-                    <p>41-) I feel like retiring to a corner to devise a way out of the impasse before developing a line of approach.</p>
+                    <label for="ASK_ID_41">41-) I feel like retiring to a corner to devise a way out of the impasse before developing a line of approach.</label>
                     <label for="ID_41">Choose a number from 0 to 10:</label>
                     <select name="ID_41" id="ID_41"></select>
                 </div>
                 
                 <!-- Question 2 -->
                 <div>
-                    <p>42-) I am ready to work with the person who shows the most positive approach.</p>
+                    <label for="ASK_ID_42">42-) I am ready to work with the person who shows the most positive approach.</label>
                     <label for="ID_42">Choose a number from 0 to 10:</label>
                     <select name="ID_42" id="ID_42"></select>
                 </div>
 
                 <!-- Question 3 -->
                 <div>
-                    <p>43-) "I find some way of reducing the size of the task by establishing what different individuals might best contribute. </p>
+                    <label for="ASK_ID_43">43-) "I find some way of reducing the size of the task by establishing what different individuals might best contribute. </label>
                     <label for="ID_43">Choose a number from 0 to 10:</label>
                     <select name="ID_43" id="ID_43"></select>
                 </div>
 
                 <!-- Question 4 -->
                 <div>
-                    <p>44-) My natural sense of urgency helps to ensure that we don’t fall behind schedule. </p>
+                    <label for="ASK_ID_44">44-) My natural sense of urgency helps to ensure that we don’t fall behind schedule. </label>
                     <label for="ID_44">Choose a number from 0 to 10:</label>
                     <select name="ID_44" id="ID_44"></select>
                 </div>
 
                 <!-- Question 5 -->
                 <div>
-                    <p>45-) I believe I keep cool and maintain my capacity to think straight. </p>
+                    <label for="ASK_ID_45">45-) I believe I keep cool and maintain my capacity to think straight. </label>
                     <label for="ID_45">Choose a number from 0 to 10:</label>
                     <select name="ID_45" id="ID_45"></select>
                 </div>
 
                 <!-- Question 6 -->
                 <div>
-                    <p>46-) I retain a steadiness of purpose in spite of the pressures. </p>
+                    <label for="ASK_ID_46">46-) I retain a steadiness of purpose in spite of the pressures. </label>
                     <label for="ID_46">Choose a number from 0 to 10:</label>
                     <select name="ID_46" id="ID_46"></select>
                 </div>
 
                 <!-- Question 7 -->
                 <div>
-                    <p>47-) I am prepared to take a positive lead if I feel the group is making no progress. </p>
+                    <label for="ASK_ID_47">47-) I am prepared to take a positive lead if I feel the group is making no progress. </label>
                     <label for="ID_47">Choose a number from 0 to 10:</label>
                     <select name="ID_47" id="ID_47"></select>
                 </div>
 
                 <!-- Question 8 -->
                 <div>
-                    <p>48-) I open up to discussions with view to stimulating new thoughts and getting something moving. </p>
+                    <label for="ASK_ID_48">48-) I open up to discussions with view to stimulating new thoughts and getting something moving. </label>
                     <label for="ID_48">Choose a number from 0 to 10:</label>
                     <select name="ID_48" id="ID_48"></select>
                 </div>
@@ -76,10 +76,12 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            for (var j = 1; j <= 8; j++) {
-                adicionarOpcoes('ID_0' + j);
+            for (var j = 41; j <= 48; j++) {
+                adicionarOpcoes('ID_' + j);
             }
             
+            randomizeQuestions()
+
             function adicionarOpcoes(selectId) {
                 var select = document.getElementById(selectId);
                 for (var i = 0; i <= 10; i++) {
@@ -90,12 +92,25 @@
                 }
             }
 
+            function randomizeQuestions() {
+                var questionsContainer = document.getElementById('questionsContainer');
+                var questions = Array.from(questionsContainer.children);
+                
+                questions.sort(function() {
+                    return 0.5 - Math.random();
+                });
+                
+                questions.forEach(function(question) {
+                    questionsContainer.appendChild(question);
+                });
+            }
+
             var form = document.getElementById("idForm");
             form.addEventListener("submit", function(event) {
                 var soma = 0;
                 // Calculates the sum of selected values
-                for (var k = 1; k <= 8; k++) {
-                    soma += parseInt(document.getElementById('ID_0' + k).value, 10);
+                for (var k = 41; k <= 48; k++) {
+                    soma += parseInt(document.getElementById('ID_' + k).value, 10);
                 }
                 // Checks if the sum of the answers is exactly equal to 10
                 if (soma !== 10) {
@@ -114,17 +129,28 @@
                     const formData = new FormData(event.target);
 
                     let jsonFormData={
-                        ID_01: formData.get('ID_01'),
-                        ID_02: formData.get('ID_02'),
-                        ID_03: formData.get('ID_03'),
-                        ID_04: formData.get('ID_04'),
-                        ID_05: formData.get('ID_05'),
-                        ID_06: formData.get('ID_06'),
-                        ID_07: formData.get('ID_07'),
-                        ID_08: formData.get('ID_08'),
+                        ASK_ID_41: document.querySelector('label[for="ASK_ID_41"]').textContent,
+                        ASK_ID_42: document.querySelector('label[for="ASK_ID_42"]').textContent,
+                        ASK_ID_43: document.querySelector('label[for="ASK_ID_43"]').textContent,
+                        ASK_ID_44: document.querySelector('label[for="ASK_ID_44"]').textContent,
+                        ASK_ID_45: document.querySelector('label[for="ASK_ID_45"]').textContent,
+                        ASK_ID_46: document.querySelector('label[for="ASK_ID_46"]').textContent,
+                        ASK_ID_47: document.querySelector('label[for="ASK_ID_47"]').textContent,
+                        ASK_ID_48: document.querySelector('label[for="ASK_ID_48"]').textContent,
+
+                        ID_41: formData.get('ID_41'),
+                        ID_42: formData.get('ID_42'),
+                        ID_43: formData.get('ID_43'),
+                        ID_44: formData.get('ID_44'),
+                        ID_45: formData.get('ID_45'),
+                        ID_46: formData.get('ID_46'),
+                        ID_47: formData.get('ID_47'),
+                        ID_48: formData.get('ID_48'),
                     }
 
-                    const url = `http://localhost:3030/form?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
+                    const url = `http://localhost:3030/RamData6`;
+                    const redirectURL = `forms7.html?txtname=${encodeURIComponent(param1)}&txtsurname=${encodeURIComponent(param2)}&txtEmail=${encodeURIComponent(param3)}`;
+                    
                     fetch(url, {
                         method: 'POST',
                         body: JSON.stringify(jsonFormData),
@@ -134,20 +160,12 @@
                         }
                     })
                     .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }else{
-                            alert('Registered Data!')
+                        if (response.ok) {
+                            window.location.href = redirectURL;
+                        } else {
+                            console.error('Error:', response.status);
                         }
-                            
-                        return response.text();
                     })
-                    .then(data => {
-                        console.log('Form submitted successfully:', data);
-                    })
-                    .catch(error => {
-                        console.error('There was a problem submitting the form:', error);
-                    });
                 }
             });
         });
