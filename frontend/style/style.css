@@ -35,7 +35,7 @@ h4{
   color: #8f8f8f;
 }
 .form{
-  margin-top: 100px;
+  margin-top: 80px;
   
 }
 form {
@@ -79,9 +79,9 @@ hr {
 }
 
 input[type="submit"] {
-  background-color: #4CAF50;
+  background-color: #007cef;
   color: #fff;
-  padding: 10px 20px;
+  padding: 10px 30px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -109,5 +109,5 @@ button {
 }
 
 .button{
-  margin-left: 150px;
-}
+  margin-left: 160px;
+}  
